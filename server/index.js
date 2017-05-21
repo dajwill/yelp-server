@@ -1,7 +1,8 @@
-var express = require('express')
-var cors = require('cors')
-const axios = require('axios');
-var app = express()
+const express = require('express')
+const cors    = require('cors')
+const axios   = require('axios');
+const geoIP   = require('geoip-lite')
+const app     = express()
 
 app.use(cors())
 app.set('port', (process.env.PORT || 8081))
@@ -14,8 +15,8 @@ app.get('/', (req, res) => {
 app.get('/search', (req, res) => {
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   console.log(req.ip);
-  console.log(req.ips);
-  console.log(ip);
+  var location = geoIP.lookup(ip)
+  console.log(location);
   // let { filter, query } = req.query
   let filter = req.query.filter || ''
   let query = req.query.query || ''
