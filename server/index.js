@@ -17,6 +17,7 @@ app.get('/search', (req, res) => {
   console.log(req.ip);
   var geoLocation = geoIP.lookup(ip)
   console.log(geoLocation);
+  let sortBy = 'rating' if req.query.recommended
   let filter = req.query.filter || ''
   let query = req.query.query || ''
   let location = req.query.location || geoLocation.zip
@@ -27,7 +28,8 @@ app.get('/search', (req, res) => {
   let params = {
     location: location,
     term: query,
-    categories: filter
+    categories: filter,
+    sort_by: sortBy
   }
 
   axios.get(url, {params: params, headers: headers})
