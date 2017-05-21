@@ -15,17 +15,17 @@ app.get('/', (req, res) => {
 app.get('/search', (req, res) => {
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   console.log(req.ip);
-  var location = geoIP.lookup(ip)
-  console.log(location);
-  // let { filter, query } = req.query
+  var geoLocation = geoIP.lookup(ip)
+  console.log(geoLocation);
   let filter = req.query.filter || ''
   let query = req.query.query || ''
+  let location = req.query.location || geoLocation.zip
   let url = `https://api.yelp.com/v3/businesses/search`
   let headers = {
     Authorization: process.env.YELP_AUTH
   }
   let params = {
-    location: 48103,
+    location: location,
     term: query,
     categories: filter
   }
