@@ -17,7 +17,9 @@ app.get('/search', (req, res) => {
   console.log(req.ip);
   var geoLocation = geoIP.lookup(ip)
   console.log(geoLocation);
-  let sortBy = 'rating' if req.query.recommended
+  if (req.query.recommended) {
+    var sortBy = 'rating'
+  }
   let filter = req.query.filter || ''
   let query = req.query.query || ''
   let location = req.query.location || geoLocation.zip
