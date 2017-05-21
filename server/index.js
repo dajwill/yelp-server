@@ -4,6 +4,7 @@ const axios = require('axios');
 var app = express()
 
 app.use(cors())
+app.set('port', (process.env.PORT || 8081))
 app.enable('trust proxy')
 
 app.get('/', (req, res) => {
@@ -36,6 +37,6 @@ app.get('/search', (req, res) => {
     .catch((err) => res.send(new Error(err)))
 })
 
-app.listen(8081, function () {
+app.listen(app.get('port'), function () {
   console.log('CORS-enabled web server listening on port 8081')
 })
